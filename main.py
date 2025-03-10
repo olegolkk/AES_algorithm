@@ -175,9 +175,7 @@ def g_mul(a, b):
 
 def pad_message(message: bytes):
     block_size = 16
-    padding = block_size - len(message) % block_size
-    if padding == 0:
-        padding = block_size
+    padding = (block_size - len(message)) % block_size
     padded_message = message + bytes([padding] * padding)
     return padded_message
 
@@ -211,6 +209,7 @@ def encrypt_block(state: bytes, expanded_key: bytes, rounds: int):
     state = sub_bytes(state)
     state = shift_rows(state)
     state = add_round_key(state, next(round_key_gen))
+    print("output=", bytes_to_hex_string(state))
     return state
 
 
